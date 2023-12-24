@@ -122,6 +122,96 @@ select {
     background-color: #453E3B;
     height: 100vh;
     transition: 0.5s;
+	
+    @media (max-width: 768px) {
+        position: fixed;
+        top: 0;
+        left: 100%;
+        width: 100%;
+        max-width: 100%; /* Обновлено: использование 100% ширины */
+        background-color: #453E3B;
+        height: 100vh;
+        transition: 0.5s;
+        overflow-y: auto;
+    }
+
+    .card h1 {
+        /* Ваши текущие стили для .card h1 */
+        color: #E8BC0E;
+        font-weight: 100;
+        margin: 0;
+        padding: 0 20px;
+        height: auto; /* Обновлено: автоматическая высота */
+        display: flex;
+        align-items: center;
+    }
+
+    .checkOut {
+        /* Ваши текущие стили для .checkOut */
+
+        @media (max-width: 768px) {
+            position: static; /* Обновлено: позиция изменена на static */
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+    }
+
+    .checkOut div {
+        /* Ваши текущие стили для .checkOut div */
+
+        @media (max-width: 768px) {
+            width: 100%;
+            height: auto; /* Обновлено: автоматическая высота */
+            margin-bottom: 10px; /* Обновлено: добавлен нижний отступ */
+        }
+    }
+
+    .listCard li {
+        /* Ваши текущие стили для .listCard li */
+
+        @media (max-width: 768px) {
+            grid-template-columns: 80px repeat(2, 1fr); /* Обновлено: изменены ширины столбцов */
+            gap: 10px; /* Обновлено: добавлен отступ между элементами */
+            row-gap: 10px;
+        }
+    }
+
+    .listCard li div {
+        /* Ваши текущие стили для .listCard li div */
+
+        @media (max-width: 768px) {
+            display: flex;
+            justify-content: flex-start; /* Обновлено: выравнивание изменено на flex-start */
+            align-items: center;
+        }
+    }
+
+    .listCard li img {
+        /* Ваши текущие стили для .listCard li img */
+
+        @media (max-width: 768px) {
+            max-height: 60px; /* Обновлено: уменьшена максимальная высота изображения */
+        }
+    }
+
+    .listCard li button {
+        /* Ваши текущие стили для .listCard li button */
+
+        @media (max-width: 768px) {
+            width: 60px; /* Обновлено: изменена ширина кнопки */
+            height: 30px; /* Обновлено: изменена высота кнопки */
+            font-size: 12px; /* Обновлено: изменен размер шрифта */
+        }
+    }
+
+    .count {
+        /* Ваши текущие стили для .count */
+
+        @media (max-width: 768px) {
+            margin: 0 5px; /* Обновлено: уменьшен внешний отступ */
+        }
+    }
 }
 
 .active .card {
