@@ -201,15 +201,17 @@ select {
 
     header {
         margin-top: 10px;
+        flex-direction: column; /* Обновлено: выравниваем элементы в столбце */
     }
 	
 	header h1 {
 		margin-left: 20px;
+        margin-bottom: 10px; /* Обновлено: добавлен нижний отступ */
 	}
 	
 	header .shopping img {
         width: 30px;
-		margin-right: 20px;
+        margin-right: 20px;
     }
 	
 	header .shopping span {
@@ -223,21 +225,20 @@ select {
         top: -8px;
         right: -8px;
         padding: 3px 8px;
-		margin-right: 20px;
+        margin-right: 20px;
     }
 
     .list {
-        gap: 0;
+        gap: 10px; /* Обновлено: добавлен отступ между элементами */
         margin-top: 10px;
-        overflow-x: auto; /* Добавим горизонтальный скролл, если элементов не умещается по ширине экрана */
-        -webkit-overflow-scrolling: touch; /* Поддержка плавного скролла в iOS */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .list .item {
-        width: 60%; /* Одна строка, поэтому 100% ширина */
-		text-align: center;
-		margin: 0 auto;
-        margin-bottom: 30px;
+        width: 100%; /* Обновлено: элементы на всю ширину */
+        text-align: center;
+        margin-bottom: 20px;
     }
 	
 	.card {
@@ -249,15 +250,15 @@ select {
         background-color: #453E3B;
         height: 100vh;
         transition: 0.5s;
-        overflow-y: auto; /* Добавлено для возможности прокрутки на мобильных устройствах */
+        overflow-y: auto;
     }
 
     .active .card {
-        left: 0; /* При активации, элемент смещается влево и становится видимым на экране */
+        left: 0;
     }
 
     .active .container {
-        transform: translateX(-100%); /* При активации, контейнер смещается влево на 100% ширины экрана */
+        transform: translateX(-100%);
     }
 }
 
