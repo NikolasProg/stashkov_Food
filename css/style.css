@@ -122,57 +122,6 @@ select {
     background-color: #453E3B;
     height: 100vh;
     transition: 0.5s;
-	
-    @media (max-width: 768px) {
-        position: fixed;
-        top: 0;
-        left: 100%;
-        width: 100%;
-        max-width: 100%;
-        background-color: #453E3B;
-        height: 100vh;
-        transition: 0.5s;
-        overflow-y: auto;
-    }
-
-    .listCard li {
-        /* Ваши текущие стили для .listCard li */
-
-        @media (max-width: 768px) {
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); /* Обновлено: автоматическое заполнение колонок с минимальной шириной 80px */
-            gap: 10px;
-            row-gap: 10px;
-            justify-content: center; /* Обновлено: центрирование элементов внутри строки */
-            text-align: center; /* Обновлено: центрирование текста */
-        }
-    }
-
-    .listCard li img {
-        /* Ваши текущие стили для .listCard li img */
-
-        @media (max-width: 768px) {
-            max-height: 60px;
-            width: auto; /* Обновлено: установка ширины изображения в автоматический режим */
-        }
-    }
-
-    .listCard li button {
-        /* Ваши текущие стили для .listCard li button */
-
-        @media (max-width: 768px) {
-            width: 60px;
-            height: 30px;
-            font-size: 12px;
-        }
-    }
-
-    .count {
-        /* Ваши текущие стили для .count */
-
-        @media (max-width: 768px) {
-            margin: 0 5px;
-        }
-    }
 }
 
 .active .card {
@@ -252,17 +201,15 @@ select {
 
     header {
         margin-top: 10px;
-        flex-direction: column; /* Обновлено: выравниваем элементы в столбце */
     }
 	
 	header h1 {
 		margin-left: 20px;
-        margin-bottom: 10px; /* Обновлено: добавлен нижний отступ */
 	}
 	
 	header .shopping img {
         width: 30px;
-        margin-right: 20px;
+		margin-right: 20px;
     }
 	
 	header .shopping span {
@@ -276,20 +223,21 @@ select {
         top: -8px;
         right: -8px;
         padding: 3px 8px;
-        margin-right: 20px;
+		margin-right: 20px;
     }
 
     .list {
-        gap: 10px; /* Обновлено: добавлен отступ между элементами */
+        gap: 0;
         margin-top: 10px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow-x: auto; /* Добавим горизонтальный скролл, если элементов не умещается по ширине экрана */
+        -webkit-overflow-scrolling: touch; /* Поддержка плавного скролла в iOS */
     }
 
     .list .item {
-        width: 100%; /* Обновлено: элементы на всю ширину */
-        text-align: center;
-        margin-bottom: 20px;
+        width: 60%; /* Одна строка, поэтому 100% ширина */
+		text-align: center;
+		margin: 0 auto;
+        margin-bottom: 30px;
     }
 	
 	.card {
@@ -301,15 +249,15 @@ select {
         background-color: #453E3B;
         height: 100vh;
         transition: 0.5s;
-        overflow-y: auto;
+        overflow-y: auto; /* Добавлено для возможности прокрутки на мобильных устройствах */
     }
 
     .active .card {
-        left: 0;
+        left: 0; /* При активации, элемент смещается влево и становится видимым на экране */
     }
 
     .active .container {
-        transform: translateX(-100%);
+        transform: translateX(-100%); /* При активации, контейнер смещается влево на 100% ширины экрана */
     }
 }
 
