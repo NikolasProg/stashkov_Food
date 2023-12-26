@@ -259,17 +259,14 @@ select {
 
     .listCard li {
     display: grid;
-    grid-template-columns: 100px repeat(3, 1fr);
+    grid-template-columns: 100px 1fr 1fr;
     color: #fff;
     row-gap: 10px;
 }
 
 .listCard li div {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column; /* Новое: располагаем дочерние элементы в столбце */
-    margin: 5px 0; /* Добавлен отступ между элементами в каждой строке */
 }
 
 .listCard li img {
@@ -284,9 +281,8 @@ select {
 }
 
 .listCard .count {
-    margin: 5px 10px 0; /* Новое: добавлен отступ сверху для количества */
+    margin-top: 5px; /* Отступ сверху для количества */
 }
-
 	
 	.card {
         position: fixed;
