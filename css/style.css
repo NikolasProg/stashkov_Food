@@ -284,17 +284,17 @@ select {
     margin-top: 5px; /* Отступ сверху для количества */
 }
 	
-	.card {
-        position: fixed;
-        top: 0;
-        left: 100%;
-        width: 100%;
-        max-width: 500px;
-        background-color: #453E3B;
-        height: 100vh;
-        transition: 0.5s;
-        overflow-y: auto; /* Добавлено для возможности прокрутки на мобильных устройствах */
-    }
+.card {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    max-width: 100%; /* Изменено с 500px на 100% */
+    background-color: #453E3B;
+    height: 100vh;
+    transition: 0.5s;
+    overflow-y: auto;
+}
 
     .active .card {
         left: 0; /* При активации, элемент смещается влево и становится видимым на экране */
