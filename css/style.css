@@ -256,6 +256,37 @@ select {
         margin: 10px;
         flex-grow: 1; /* Новое свойство для занимаемости всего доступного пространства */
     }  
+
+    .listCard li {
+    display: grid;
+    grid-template-columns: 100px repeat(3, 1fr);
+    color: #fff;
+    row-gap: 10px;
+}
+
+.listCard li div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Новое: располагаем дочерние элементы в столбце */
+    margin: 5px 0; /* Добавлен отступ между элементами в каждой строке */
+}
+
+.listCard li img {
+    width: 100%;
+    height: auto;
+    max-height: 80px;
+}
+
+.listCard li button {
+    background-color: #fff5;
+    border: none;
+}
+
+.listCard .count {
+    margin: 5px 10px 0; /* Новое: добавлен отступ сверху для количества */
+}
+
 	
 	.card {
         position: fixed;
