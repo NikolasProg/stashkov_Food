@@ -103,17 +103,18 @@ let openShopping = document.querySelector('.shopping');
 
         let listCards = {};
 
-        // Добавьте следующий код после вашего существующего кода создания продуктов
-        products.forEach((product) => {
-            let newDiv = document.createElement('div');
-            newDiv.classList.add('item');
-            newDiv.innerHTML = `
-                <img src="image/${product.image}" data-description="${product.description}" class="picture">
-                <div class="title">${product.name}</div>
-                <div class="price" id="price_${product.id}">${getFormattedPrice(product.prices)}</div>
-                <button onclick="addToCard(${product.id})">Добавить в корзину</button>`;
-            list.appendChild(newDiv);
-        });
+    // Добавьте следующий код после вашего существующего кода создания продуктов
+    products.forEach((product) => {
+    let newDiv = document.createElement('div');
+    newDiv.classList.add('item');
+    newDiv.setAttribute('data-key', product.id); // Добавляем атрибут data-key
+    newDiv.innerHTML = `
+        <img src="image/${product.image}" data-description="${product.description}" class="picture">
+        <div class="title">${product.name}</div>
+        <div class="price" id="price_${product.id}">${getFormattedPrice(product.prices)}</div>
+        <button onclick="addToCard(${product.id})" data-key="${product.id}">Добавить в корзину</button>`;
+    list.appendChild(newDiv);
+});
 
         // Добавьте следующий код после вашего существующего кода
         document.addEventListener('DOMContentLoaded', function () {
@@ -152,6 +153,63 @@ let openShopping = document.querySelector('.shopping');
         function getFormattedPrice(price) {
             return price + 'р';
         }
+		
+// Анимация
+function addToCartAnimation(productKey) {
+    const item = document.querySelector(`.item[data-key="${productKey}"]`);
+    const img = item.querySelector('img');
+
+    // Дублируем картинку
+    const clone = img.cloneNode(true);
+
+    // Применяем стили к клону
+    clone.style.opacity = '0.8';
+    clone.style.position = 'absolute';
+    clone.style.height = '150px';
+    clone.style.width = '150px';
+    clone.style.objectFit = 'cover';
+    clone.style.zIndex = '100';
+    clone.style.transition = 'all 1s ease-in-out';
+
+    // Устанавливаем начальные координаты клонированной картинки
+    clone.style.top = `${img.offsetTop}px`;
+    clone.style.left = `${img.offsetLeft}px`;
+
+    document.body.appendChild(clone);
+
+    const shoppingCart = document.querySelector('.shopping');
+    const cartRect = shoppingCart.getBoundingClientRect();
+
+    // Задаем координаты, куда должен двигаться клон
+    clone.style.top = `${cartRect.top + 5}px`;
+    clone.style.left = `${cartRect.left + 5}px`;
+    clone.style.width = '75px';
+    clone.style.height = '75px';
+
+    // Событие, которое происходит после завершения анимации
+    clone.addEventListener('transitionend', () => {
+        document.body.removeChild(clone);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Получите все элементы с классом 'item'
+    let items = document.querySelectorAll('.item');
+
+    // Добавьте обработчик события для каждого элемента
+    items.forEach(function (item) {
+        let img = item.querySelector('img');
+
+        // Добавьте обработчик события для клика на изображение
+        img.addEventListener('click', function () {
+            // Получите data-key из атрибута 'data-key'
+            let productKey = item.getAttribute('data-key');
+
+            // Вызов функции для анимации добавления в корзину
+            addToCartAnimation(productKey);
+        });
+    });
+});
 
         function addToCard(key) {
             const productKey = `${key}`;
@@ -172,62 +230,91 @@ let openShopping = document.querySelector('.shopping');
                 }
 
                 reloadCard();
+				addToCartAnimation(productKey);
+				
             } else {
                 alert('Такого объёма нет. Выберите другой объем.');
             }
         }
 
-        function reloadCard() {
-            listCard.innerHTML = '';
-            let totalPrice = 0;
-            let count = 0;
+function reloadCard() {
+    listCard.innerHTML = '';
+    let totalPrice = 0;
+    let count = 0;
 
-            Object.keys(listCards).forEach((productKey) => {
-                const value = listCards[productKey];
+    Object.keys(listCards).forEach((productKey) => {
+        const value = listCards[productKey];
 
-                if (value != null) {
-                    let newDiv = document.createElement('li');
-                    newDiv.innerHTML = `
-                        <div><img src="image/${value.image}" class="picture"/></div>
-                        <div>${value.name}</div>
-                        <div>${value.price.toLocaleString()}р</div>
-                        <div>
-                            <button onclick="changeQuantity('${productKey}', 'decrement')">-</button>
-                            <div class="count" id="count_${productKey}">${value.quantity}</div>
-                            <button onclick="changeQuantity('${productKey}', 'increment')">+</button>
-                        </div>`;
-                    listCard.appendChild(newDiv);
+        if (value != null) {
+            let newDiv = document.createElement('li');
+            newDiv.innerHTML = `
+                <div><img src="image/${value.image}" class="picture"/></div>
+                <div>${value.name}</div>
+                <div>${value.price.toLocaleString()}р</div>
+                <div>
+                    <button onclick="changeQuantity('${productKey}', 'decrement')">-</button>
+                    <div class="count" id="count_${productKey}">${value.quantity}</div>
+                    <button onclick="changeQuantity('${productKey}', 'increment')">+</button>
+                </div>`;
+            listCard.appendChild(newDiv);
 
-                    totalPrice += value.price;
-                    count += value.quantity;
-                }
-            });
-
-            total.innerText = `${totalPrice.toLocaleString()}р`;
-            quantity.innerText = count;
+            totalPrice += value.price;
+            count += value.quantity;
         }
+    });
 
-        function changeQuantity(productKey, action) {
-            let currentQuantity = listCards[productKey].quantity;
+    total.innerText = `${totalPrice.toLocaleString()}р`;
+    quantity.innerText = count;
 
-            if (action === 'decrement') {
-                if (currentQuantity > 1) {
-                    currentQuantity--;
-                } else {
-                    // Если количество равно 1 и происходит уменьшение, удаляем товар из корзины
-                    delete listCards[productKey];
-                }
-            } else if (action === 'increment') {
-                currentQuantity++;
-            }
+    // Обновление текста "Корзина" с суммой товаров
+    updateShoppingText();
+}
 
-            if (listCards[productKey]) {
-                listCards[productKey].quantity = currentQuantity;
-                listCards[productKey].price = listCards[productKey].prices * currentQuantity;
-            }
+function changeQuantity(productKey, action) {
+    const selectedVolume = listCards[productKey].selectedVolume;
+    let currentQuantity = listCards[productKey].quantity;
 
-            reloadCard();
+    if (action === 'decrement') {
+        if (currentQuantity > 1) {
+            currentQuantity--;
+        } else {
+            // Если количество равно 1 и происходит уменьшение, удаляем товар из корзины
+            delete listCards[productKey];
         }
+    } else if (action === 'increment') {
+        currentQuantity++;
+    }
+
+    if (listCards[productKey]) {
+        listCards[productKey].quantity = currentQuantity;
+        listCards[productKey].price = listCards[productKey].prices[selectedVolume] * currentQuantity;
+    }
+
+    reloadCard();
+	
+	// Обновление текста "Корзина" с суммой товаров
+    updateShoppingText();
+}
+
+function updateShoppingText() {
+    let totalQuantity = 0;
+    let totalSum = 0;
+
+    // Подсчет общего количества товаров и суммы в корзине
+    Object.keys(listCards).forEach((productKey) => {
+        const value = listCards[productKey];
+        if (value != null) {
+            totalQuantity += value.quantity;
+            totalSum += value.price;
+        }
+    });
+
+    // Обновление текста "Корзина" с суммой товаров
+    const shoppingText = totalQuantity > 0 ? `${totalSum.toLocaleString()}р` : 'Корзина';
+    
+    // Находим элемент <p> и обновляем его содержимое
+    document.querySelector('.shopping p').innerText = shoppingText;
+}
 
         // JavaScript для управления всплывающей формой
 
@@ -254,3 +341,19 @@ let openShopping = document.querySelector('.shopping');
                 form.style.display = 'none';
             }, 300);
         });
+		
+	document.addEventListener('DOMContentLoaded', function () {
+    // Получите все элементы с классом 'item'
+    let items = document.querySelectorAll('.item');
+
+    // Добавьте обработчик события для каждого элемента
+    items.forEach(function (item, index) {
+        let button = item.querySelector('button');
+
+        // Добавьте обработчик события для клика на кнопку "Добавить в корзину"
+        button.addEventListener('click', function () {
+            // Вызов функции для анимации добавления в корзину
+            addToCartAnimation(index + 1); // Индекс + 1 соответствует ID продукта
+        });
+    });
+});
