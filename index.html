@@ -85,17 +85,17 @@ $(document).ready(function () {
         var koment = $("#user_koment").val();
 
 // Собираем данные из корзины
-let cartData = [];
-Object.keys(listCards).forEach((productKey) => {
-    const value = listCards[productKey];
-    if (value != null) {
-        cartData.push({
-            Еда: '<strong>' + value.name + '</strong>\n',
-            Цена: '<strong>' + value.price + '</strong>\n',
-            Количество: '<strong>' + value.quantity + '</strong>\n'
+        let cartData = [];
+        Object.keys(listCards).forEach((productKey) => {
+            const value = listCards[productKey];
+            if (value != null) {
+                cartData.push({
+                    Еда: value.name,
+                    Цена: value.price,
+                    Количество: value.quantity
+                });
+            }
         });
-    }
-});
 
         var data = {
             name: name,
